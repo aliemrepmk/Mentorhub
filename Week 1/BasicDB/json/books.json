@@ -1,0 +1,122 @@
+[
+  {
+    "book_name": "1984",
+    "author_name": "George Orwell",
+    "publish_date": "1949-06-08",
+    "isbn": "9780451524935"
+  },
+  {
+    "book_name": "Pride and Prejudice",
+    "author_name": "Jane Austen",
+    "publish_date": "1813-01-28",
+    "isbn": "9781503290563"
+  },
+  {
+    "book_name": "The Catcher in the Rye",
+    "author_name": "J.D. Salinger",
+    "publish_date": "1951-07-16",
+    "isbn": "9780316769488"
+  },
+  {
+    "book_name": "To Kill a Mockingbird",
+    "author_name": "Harper Lee",
+    "publish_date": "1960-07-11",
+    "isbn": "9780061120084"
+  },
+  {
+    "book_name": "The Great Gatsby",
+    "author_name": "F. Scott Fitzgerald",
+    "publish_date": "1925-04-10",
+    "isbn": "9780743273565"
+  },
+  {
+    "book_name": "Moby Dick",
+    "author_name": "Herman Melville",
+    "publish_date": "1851-10-18",
+    "isbn": "9781503280786"
+  },
+  {
+    "book_name": "War and Peace",
+    "author_name": "Leo Tolstoy",
+    "publish_date": "1869-01-01",
+    "isbn": "9780199232765"
+  },
+  {
+    "book_name": "The Hobbit",
+    "author_name": "J.R.R. Tolkien",
+    "publish_date": "1937-09-21",
+    "isbn": "9780547928227"
+  },
+  {
+    "book_name": "Crime and Punishment",
+    "author_name": "Fyodor Dostoevsky",
+    "publish_date": "1866-01-01",
+    "isbn": "9780143058144"
+  },
+  {
+    "book_name": "Brave New World",
+    "author_name": "Aldous Huxley",
+    "publish_date": "1932-01-01",
+    "isbn": "9780060850524"
+  },
+  {
+    "book_name": "The Lord of the Rings",
+    "author_name": "J.R.R. Tolkien",
+    "publish_date": "1954-07-29",
+    "isbn": "9780618640157"
+  },
+  {
+    "book_name": "Anna Karenina",
+    "author_name": "Leo Tolstoy",
+    "publish_date": "1877-01-01",
+    "isbn": "9780143035008"
+  },
+  {
+    "book_name": "Jane Eyre",
+    "author_name": "Charlotte Bront\u00eb",
+    "publish_date": "1847-10-16",
+    "isbn": "9780142437209"
+  },
+  {
+    "book_name": "The Brothers Karamazov",
+    "author_name": "Fyodor Dostoevsky",
+    "publish_date": "1880-01-01",
+    "isbn": "9780374528379"
+  },
+  {
+    "book_name": "Wuthering Heights",
+    "author_name": "Emily Bront\u00eb",
+    "publish_date": "1847-12-01",
+    "isbn": "9780141439556"
+  },
+  {
+    "book_name": "Fahrenheit 451",
+    "author_name": "Ray Bradbury",
+    "publish_date": "1953-10-19",
+    "isbn": "9781451673319"
+  },
+  {
+    "book_name": "Great Expectations",
+    "author_name": "Charles Dickens",
+    "publish_date": "1861-01-01",
+    "isbn": "9780141439563"
+  },
+  {
+    "book_name": "The Odyssey",
+    "author_name": "Homer",
+    "publish_date": "0800-01-01",
+    "isbn": "9780140268867"
+  },
+  {
+    "book_name": "Frankenstein",
+    "author_name": "Mary Shelley",
+    "publish_date": "1818-01-01",
+    "isbn": "9780486282114"
+  },
+  {
+    "book_name": "Dracula",
+    "author_name": "Bram Stoker",
+    "publish_date": "1897-05-26",
+    "isbn": "9780141439846"
+  }
+]

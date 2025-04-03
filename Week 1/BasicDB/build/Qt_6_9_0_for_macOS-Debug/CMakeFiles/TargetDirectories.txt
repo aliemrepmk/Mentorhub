@@ -1,0 +1,5 @@
+/Users/aliemrepamuk/Desktop/BasicDB/build/Qt_6_9_0_for_macOS-Debug/CMakeFiles/BasicDB.dir
+/Users/aliemrepamuk/Desktop/BasicDB/build/Qt_6_9_0_for_macOS-Debug/CMakeFiles/edit_cache.dir
+/Users/aliemrepamuk/Desktop/BasicDB/build/Qt_6_9_0_for_macOS-Debug/CMakeFiles/rebuild_cache.dir
+/Users/aliemrepamuk/Desktop/BasicDB/build/Qt_6_9_0_for_macOS-Debug/CMakeFiles/BasicDB_autogen_timestamp_deps.dir
+/Users/aliemrepamuk/Desktop/BasicDB/build/Qt_6_9_0_for_macOS-Debug/CMakeFiles/BasicDB_autogen.dir
