@@ -1,5 +1,0 @@
-/Users/aliemrepamuk/Desktop/BasicDB/build/CMakeFiles/BasicDB.dir
-/Users/aliemrepamuk/Desktop/BasicDB/build/CMakeFiles/edit_cache.dir
-/Users/aliemrepamuk/Desktop/BasicDB/build/CMakeFiles/rebuild_cache.dir
-/Users/aliemrepamuk/Desktop/BasicDB/build/CMakeFiles/BasicDB_autogen_timestamp_deps.dir
-/Users/aliemrepamuk/Desktop/BasicDB/build/CMakeFiles/BasicDB_autogen.dir

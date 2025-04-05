@@ -1,9 +1,0 @@
-# ninja log v6
-2	276	1743601898648126036	BasicDB_autogen/timestamp	2e656b9c3db1db39
-2	276	1743601898648126036	BasicDB_autogen/mocs_compilation.cpp	2e656b9c3db1db39
-2	276	1743601898648126036	/Users/aliemrepamuk/Desktop/BasicDB/build/Qt_6_9_0_for_macOS-Debug/BasicDB_autogen/timestamp	2e656b9c3db1db39
-2	276	1743601898648126036	/Users/aliemrepamuk/Desktop/BasicDB/build/Qt_6_9_0_for_macOS-Debug/BasicDB_autogen/mocs_compilation.cpp	2e656b9c3db1db39
-278	803	1743601898659791672	CMakeFiles/BasicDB.dir/src/user.cpp.o	55e99098208492ff
-278	1133	1743601898659685838	CMakeFiles/BasicDB.dir/main.cpp.o	88a5e05c68cc81a8
-279	1252	1743601898659980881	CMakeFiles/BasicDB.dir/src/gui/loginWindow.cpp.o	9a2e5cf930839c06
-278	1365	1743601898659888672	CMakeFiles/BasicDB.dir/src/database/dbManager.cpp.o	ae57da9ee2dbe1dd

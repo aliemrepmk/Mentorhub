@@ -17,6 +17,5 @@ private slots:
     void handleLogin();
 
 private:
-    void loadUsers();
     class Ui::LoginWindow *ui;
 };

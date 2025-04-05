@@ -2,12 +2,15 @@
 #include "include/gui/loginWindow.hpp"
 
 #include "database/dbManager.hpp"
-#include "user.hpp"
 
 #include <iostream>
 #include <string>
 #include <pqxx/pqxx>
 #include <stdexcept>
+
+#include <fstream>
+#include <unordered_map>
+#include <sstream>
 
 bool createUser(pqxx::connection& conn, std::string first_name, std::string last_name, std::string email) {
     try {
@@ -141,12 +144,36 @@ void explainDb(pqxx::connection& conn, std::string email) {
     }
 }
 
+std::string configureConnection(const std::string& path) {
+    std::ifstream file(path);
+    std::unordered_map<std::string, std::string> env;
+    std::string line;
+
+    while (std::getline(file, line)) {
+        if (line.empty() || line[0] == '#') continue; // skip empty/comments
+        size_t equals = line.find('=');
+        if (equals != std::string::npos) {
+            std::string key = line.substr(0, equals);
+            std::string value = line.substr(equals + 1);
+            env[key] = value;
+        }
+    }
+
+    std::string connection_string =
+        "dbname=" + env["DB_NAME"] +
+        " user=" + env["DB_USER"] +
+        " password=" + env["DB_PASS"] +
+        " hostaddr=" + env["DB_HOST"] +
+        " port=" + env["DB_PORT"];
+
+    return connection_string;
+}
+
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     // Initialize database connection
-    const std::string CONNECTION_STRING = "dbname=user_db user=postgres password=381755 hostaddr=127.0.0.1 port=5432";
-    DatabaseManager::initialize(CONNECTION_STRING);
+    DatabaseManager::initialize(configureConnection("/Users/aliemrepamuk/Desktop/CENG/Mentorhub/Week 1/BasicDB/.env"));
     auto& dbManager = DatabaseManager::getInstance();
     auto& conn = dbManager.getConnection();
 
@@ -164,21 +191,7 @@ int main(int argc, char *argv[]) {
     // Load example reading lists
     dbManager.populateReadingLists("/Users/aliemrepamuk/Desktop/BasicDB/json/reading_lists.json");
 
-
-    std::cout << "\n\n" << std::endl;
-    
-    // Retrieve an user by email
-    try {
-        auto userOpt = User::getUserByEmail(conn, "aliemrepamuk0@gmail.com");
-        if (userOpt.has_value()) {
-            const auto& user = userOpt.value();
-            user.getUserInfo();
-        } else {
-            std::cout << "User not found!\n";
-        }
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
-    }
+    /*
     std::cout << "\n\n" << std::endl;
 
     dbManager.listUsers();
@@ -194,7 +207,7 @@ int main(int argc, char *argv[]) {
     dbManager.createReadingGoal(5, 25, 30);
     dbManager.updateBookProgress(1);
     dbManager.showGoalProgress(1);
-
+    */
 
     // === Launch GUI Login Window ===
     LoginWindow loginWindow;

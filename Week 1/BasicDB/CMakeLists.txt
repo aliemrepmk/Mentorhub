@@ -29,14 +29,12 @@ link_directories(${LIBPQXX_LIBRARY_DIRS})
 # Source files
 set(SOURCES
     main.cpp
-    src/user.cpp
     src/database/dbManager.cpp
     src/gui/loginWindow.cpp
 )
 
 # Header files
 set(HEADERS
-    include/user.hpp
     include/database/dbManager.hpp
     include/gui/loginWindow.hpp
 )
