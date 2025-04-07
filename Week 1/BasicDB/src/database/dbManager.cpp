@@ -70,6 +70,7 @@ void DatabaseManager::initializeTables() {
                 first_name TEXT NOT NULL,
                 last_name TEXT NOT NULL,
                 email TEXT UNIQUE NOT NULL,
+                password_hash TEXT NOT NULL,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                 updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
@@ -503,4 +504,29 @@ void DatabaseManager::showGoalProgress(int goal_id) {
     } catch (const std::exception& e) {
         throw std::runtime_error("dbManager: Failed to show goal progress: " + std::string(e.what()));
     }
+}
+
+std::string DatabaseManager::loadConnectionString(const std::string& path) {
+    std::ifstream file(path);
+    std::unordered_map<std::string, std::string> env;
+    std::string line;
+
+    while (std::getline(file, line)) {
+        if (line.empty() || line[0] == '#') continue;
+        size_t equals = line.find('=');
+        if (equals != std::string::npos) {
+            std::string key = line.substr(0, equals);
+            std::string value = line.substr(equals + 1);
+            env[key] = value;
+        }
+    }
+
+    std::string connection_string =
+        "dbname=" + env["DB_NAME"] +
+        " user=" + env["DB_USER"] +
+        " password=" + env["DB_PASS"] +
+        " hostaddr=" + env["DB_HOST"] +
+        " port=" + env["DB_PORT"];
+
+    return connection_string;
 }

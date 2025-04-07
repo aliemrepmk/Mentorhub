@@ -15,7 +15,8 @@ public:
 
 private slots:
     void handleLogin();
+    void handleCreateAccount();
 
 private:
-    class Ui::LoginWindow *ui;
+    Ui::LoginWindow *ui;
 };

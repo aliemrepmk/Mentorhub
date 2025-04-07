@@ -13,6 +13,7 @@ set(CMAKE_AUTOUIC ON)
 find_package(Qt6 REQUIRED COMPONENTS Widgets)
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(LIBPQXX REQUIRED libpqxx)
+pkg_check_modules(LIBSODIUM REQUIRED libsodium)
 
 # Include directories
 include_directories(
@@ -20,23 +21,28 @@ include_directories(
     ${PROJECT_SOURCE_DIR}/include/database
     ${PROJECT_SOURCE_DIR}/include/gui
     ${LIBPQXX_INCLUDE_DIRS}
+    ${LIBSODIUM_INCLUDE_DIRS}
     /opt/homebrew/include
 )
 
-# Link directories (for pqxx)
-link_directories(${LIBPQXX_LIBRARY_DIRS})
+# Link directories (for pqxx & libsodium)
+link_directories(${LIBPQXX_LIBRARY_DIRS} ${LIBSODIUM_LIBRARY_DIRS})
 
 # Source files
 set(SOURCES
     main.cpp
     src/database/dbManager.cpp
+    src/database/userManager.cpp
     src/gui/loginWindow.cpp
+    src/gui/registerWindow.cpp
 )
 
 # Header files
 set(HEADERS
     include/database/dbManager.hpp
+    include/database/userManager.hpp
     include/gui/loginWindow.hpp
+    include/gui/registerWindow.hpp
 )
 
 # UI files
@@ -58,4 +64,5 @@ add_executable(${PROJECT_NAME}
 target_link_libraries(${PROJECT_NAME}
     Qt6::Widgets
     ${LIBPQXX_LIBRARIES}
+    ${LIBSODIUM_LIBRARIES}
 )

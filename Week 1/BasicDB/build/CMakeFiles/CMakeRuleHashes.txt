@@ -1,0 +1,4 @@
+# Hashes of file build rules.
+aa5e8cc9c290e280fb32d81b67020f82 BasicDB_autogen/timestamp
+4474b2a774e99e10e1e0d624d0fc631d CMakeFiles/BasicDB_autogen
+4474b2a774e99e10e1e0d624d0fc631d CMakeFiles/BasicDB_autogen_timestamp_deps

@@ -1,34 +1,53 @@
 #include "loginWindow.hpp"
 #include "ui_LoginWindow.h"
 
-#include "database/dbManager.hpp"
+#include "registerWindow.hpp"
 
 #include <QScreen>
-#include <QTableWidget>
+#include <QGuiApplication>
 #include <QLineEdit>
 #include <QPushButton>
 #include <QLabel>
+#include <QDebug>
 
 LoginWindow::LoginWindow(QWidget *parent)
     : QWidget(parent), ui(new Ui::LoginWindow) {
     ui->setupUi(this);
 
-    // Place the GUI in the center of the screen
+    // Center the window
     QRect screenGeometry = QGuiApplication::primaryScreen()->geometry();
     int x = (screenGeometry.width() - width()) / 2;
     int y = (screenGeometry.height() - height()) / 2;
     move(x, y);
 
+    // Connect buttons
     connect(ui->loginButton, &QPushButton::clicked, this, &LoginWindow::handleLogin);
+    connect(ui->createAccountButton, &QPushButton::clicked, this, &LoginWindow::handleCreateAccount);
 }
 
 LoginWindow::~LoginWindow() {
     delete ui;
 }
+
 void LoginWindow::handleLogin() {
     QString email = ui->emailInput->text().trimmed();
-    if (email.isEmpty()) {
-        ui->statusLabel->setText("❗ Please enter your email.");
+    QString password = ui->passwordInput->text();
+
+    if (email.isEmpty() || password.isEmpty()) {
+        ui->statusLabel->setText("❗ Please enter both email and password.");
         return;
     }
+
+    // Placeholder for actual verification
+    qDebug() << "Attempting login with email:" << email << "and password:" << password;
+    ui->statusLabel->setText("🔐 Verifying credentials...");
+
+    // Call UserManager::verifyLogin(email.toStdString(), password.toStdString())
+    // and update statusLabel accordingly
+}
+
+void LoginWindow::handleCreateAccount() {
+    auto *registerWin = new RegisterWindow();
+    registerWin->setAttribute(Qt::WA_DeleteOnClose); // clean up when closed
+    registerWin->show();
 }

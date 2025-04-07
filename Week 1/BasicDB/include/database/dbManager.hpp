@@ -22,6 +22,8 @@ public:
     // Explicitly close the database connection
     void closeConnection();
 
+    static std::string loadConnectionString(const std::string& path);
+
     // Function to initalize tables & populate tables
     void initializeTables();
     void populateBooks(const std::string& json_file_path);
