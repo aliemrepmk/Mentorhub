@@ -35,6 +35,7 @@ set(SOURCES
     src/database/userManager.cpp
     src/gui/loginWindow.cpp
     src/gui/registerWindow.cpp
+    src/gui/mainMenuWindow.cpp
 )
 
 # Header files
@@ -43,11 +44,14 @@ set(HEADERS
     include/database/userManager.hpp
     include/gui/loginWindow.hpp
     include/gui/registerWindow.hpp
+    include/gui/mainMenuWindow.hpp
 )
 
 # UI files
 set(UIS
     gui_designs/LoginWindow.ui
+    gui_designs/RegisterWindow.ui
+    gui_designs/MainMenuWindow.ui
 )
 
 # Add UI directory to Qt's UIC include path

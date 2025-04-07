@@ -8,4 +8,5 @@ public:
     static bool readUser(const std::string& email);
     static bool updateUser(const std::string& email, const std::string& new_firstname);
     static bool deleteUser(const std::string& email);
+    static bool verifyUser(const std::string& email, const std::string& password);
 };

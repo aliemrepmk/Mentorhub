@@ -1,7 +1,10 @@
 #include "loginWindow.hpp"
 #include "ui_LoginWindow.h"
 
+#include "database/userManager.hpp"
+
 #include "registerWindow.hpp"
+#include "mainMenuWindow.hpp"
 
 #include <QScreen>
 #include <QGuiApplication>
@@ -34,16 +37,22 @@ void LoginWindow::handleLogin() {
     QString password = ui->passwordInput->text();
 
     if (email.isEmpty() || password.isEmpty()) {
-        ui->statusLabel->setText("❗ Please enter both email and password.");
+        ui->statusLabel->setText("Please enter both email and password.");
         return;
     }
 
-    // Placeholder for actual verification
-    qDebug() << "Attempting login with email:" << email << "and password:" << password;
-    ui->statusLabel->setText("🔐 Verifying credentials...");
+    if (UserManager::verifyUser(email.toStdString(), password.toStdString())) {
+        // Login successful
+        ui->statusLabel->setText("Login successful. Redirecting...");
 
-    // Call UserManager::verifyLogin(email.toStdString(), password.toStdString())
-    // and update statusLabel accordingly
+        // Open main menu
+        auto* menu = new MainMenuWindow();
+        menu->setAttribute(Qt::WA_DeleteOnClose);
+        menu->show();
+        this->close();
+    } else {
+        ui->statusLabel->setText("Invalid email or password.");
+    }
 }
 
 void LoginWindow::handleCreateAccount() {

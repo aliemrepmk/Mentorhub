@@ -25,26 +25,26 @@ void RegisterWindow::handleRegister() {
     QString password = ui->passwordInput->text();
 
     if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-        ui->statusLabel->setText("❗ All fields must be filled.");
+        ui->statusLabel->setText("All fields must be filled.");
         return;
     }
 
     // Basic email validation
     QRegularExpression emailRegex("(^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$)");
     if (!emailRegex.match(email).hasMatch()) {
-        ui->statusLabel->setText("❗ Please enter a valid email address.");
+        ui->statusLabel->setText("Please enter a valid email address.");
         return;
     }
 
     try {
         bool success = UserManager::createUser(firstName.toStdString(), lastName.toStdString(), email.toStdString(), password.toStdString());
         if (success) {
-            QMessageBox::information(this, "Success", "🎉 Account created successfully!");
+            QMessageBox::information(this, "Success", "Account created successfully!");
             this->close();
         } else {
-            ui->statusLabel->setText("❌ This email is already used.");
+            ui->statusLabel->setText("This email is already used.");
         }
     } catch (const std::exception &e) {
-        ui->statusLabel->setText(QString("❌ Error: ") + e.what());
+        ui->statusLabel->setText(QString("Error: ") + e.what());
     }
 }

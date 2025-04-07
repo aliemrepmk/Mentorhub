@@ -103,3 +103,18 @@ bool UserManager::deleteUser(const std::string& email) {
         throw std::runtime_error("Error: " + std::string(e.what()));
     }
 }
+
+bool UserManager::verifyUser(const std::string& email, const std::string& password) {
+    auto& conn = DatabaseManager::getInstance().getConnection();
+
+    try {
+        pqxx::work w(conn);
+        auto result = w.exec_params("SELECT password_hash FROM users WHERE email = $1", email);
+        if (result.empty()) return false;
+
+        std::string hash = result[0]["password_hash"].as<std::string>();
+        return crypto_pwhash_str_verify(hash.c_str(), password.c_str(), password.length()) == 0;
+    } catch (...) {
+        return false;
+    }
+}
