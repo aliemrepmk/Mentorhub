@@ -30,11 +30,11 @@ int main(int argc, char *argv[]) {
     dbManager.populateBooks("/Users/aliemrepamuk/Desktop/BasicDB/json/books.json");
 
     // Add initial users
-    UserManager::createUser("Ali Emre", "Pamuk", "aliemrepamuk0@gmail.com", "SuperSecret123");
+    UserManager::createUser("Ali Emre",    "Pamuk", "aliemrepamuk0@gmail.com",   "SuperSecret123");
     UserManager::createUser("Ahmet Erdem", "Pamuk", "ahmeterdempamuk@gmail.com", "SuperSecret123");
     UserManager::createUser("Mehmet Emin", "Pamuk", "mehmeteminpamuk@gmail.com", "SuperSecret123");
-    UserManager::createUser("Bekir",       "Pamuk", "bekirpamuk@gmail.com", "SuperSecret123");
-    UserManager::createUser("Özgür",       "Pamuk", "özgürpamuk@gmail.com", "SuperSecret123");
+    UserManager::createUser("Bekir",       "Pamuk", "bekirpamuk@gmail.com",      "SuperSecret123");
+    UserManager::createUser("Özgür",       "Pamuk", "özgürpamuk@gmail.com",      "SuperSecret123");
 
     // Load example reading lists
     dbManager.populateReadingLists("/Users/aliemrepamuk/Desktop/BasicDB/json/reading_lists.json");

@@ -10,6 +10,11 @@ MainMenuWindow::MainMenuWindow(QWidget *parent)
     ui->setupUi(this);
 
     connect(ui->logoutButton, &QPushButton::clicked, this, &MainMenuWindow::handleLogout);
+    connect(ui->booksButton, &QPushButton::clicked, [this]() {
+        auto* booksWin = new BooksWindow();
+        booksWin->setAttribute(Qt::WA_DeleteOnClose);
+        booksWin->show();
+    });
 }
 
 MainMenuWindow::~MainMenuWindow() {

@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BooksWindow</class>
+ <widget class="QWidget" name="BooksWindow">
+  <property name="minimumSize">
+   <size><width>800</width><height>600</height></size>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QLabel" name="titleLabel">
+     <property name="text"><string>📚 PERSONAL LIBRARY</string></property>
+     <property name="alignment"><set>Qt::AlignCenter</set></property>
+     <property name="styleSheet">
+      <string notr="true">font-size: 24px; font-weight: bold;</string>
+     </property>
+    </widget>
+   </item>
+
+   <!-- Filter Row -->
+   <item>
+    <layout class="QHBoxLayout" name="filterLayout">
+     <item>
+      <widget class="QLineEdit" name="authorFilterInput">
+       <property name="placeholderText"><string>Author's name</string></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="isbnFilterInput">
+       <property name="placeholderText"><string>ISBN</string></property>
+      </widget>
+     </item>
+     <item>
+      <layout class="QVBoxLayout" name="yearSliderLayout">
+       <item>
+        <layout class="QHBoxLayout" name="yearLabelsLayout">
+         <item><widget class="QLabel" name="minYearLabel"><property name="text"><string>1800</string></property></widget></item>
+         <item><widget class="QLabel" name="maxYearLabel"><property name="text"><string>2025</string></property></widget></item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="yearSliders">
+         <item>
+          <widget class="QSlider" name="minYearSlider">
+           <property name="orientation"><enum>Qt::Horizontal</enum></property>
+           <property name="minimum"><number>1800</number></property>
+           <property name="maximum"><number>2025</number></property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QSlider" name="maxYearSlider">
+           <property name="orientation"><enum>Qt::Horizontal</enum></property>
+           <property name="minimum"><number>1800</number></property>
+           <property name="maximum"><number>2025</number></property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="applyFilterButton">
+       <property name="text"><string>Apply filter</string></property>
+      </widget>
+     </item>
+     <item>
+       <widget class="QPushButton" name="clearFilterButton">
+        <property name="text"><string>Clear filters</string></property>
+       </widget>
+     </item>
+    </layout>
+   </item>
+
+   <!-- Search -->
+   <item>
+    <layout class="QHBoxLayout" name="searchLayout">
+     <item>
+      <widget class="QLineEdit" name="searchInput">
+       <property name="placeholderText"><string>Enter the book name</string></property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="searchButton">
+       <property name="text"><string>Search</string></property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+
+   <!-- Book Table -->
+   <item>
+    <widget class="QTableWidget" name="bookTable"/>
+   </item>
+
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

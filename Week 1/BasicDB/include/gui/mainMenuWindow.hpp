@@ -2,6 +2,8 @@
 
 #include <QWidget>
 
+#include "booksWindow.hpp" 
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainMenuWindow; }
 QT_END_NAMESPACE
