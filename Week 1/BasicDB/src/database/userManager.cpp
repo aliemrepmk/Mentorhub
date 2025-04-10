@@ -118,3 +118,21 @@ bool UserManager::verifyUser(const std::string& email, const std::string& passwo
         return false;
     }
 }
+
+int UserManager::getUserId(const std::string& email) {
+    auto& conn = DatabaseManager::getInstance().getConnection();
+
+    try {
+        pqxx::work w(conn);
+        auto result = w.exec_params("SELECT id FROM users WHERE email = $1", email);
+        if (result.empty()) {
+            std::cout << "User does not exist\n";
+            return false;
+        }
+
+        int id = result[0]["id"].as<int>();
+        return id;
+    } catch (const std::exception& e) {
+        throw std::runtime_error("Error: " + std::string(e.what()));
+    }
+}

@@ -38,6 +38,7 @@ set(SOURCES
     src/gui/registerWindow.cpp
     src/gui/mainMenuWindow.cpp
     src/gui/booksWindow.cpp
+    src/gui/readingListsWindow.cpp
 )
 
 # Header files
@@ -49,6 +50,7 @@ set(HEADERS
     include/gui/registerWindow.hpp
     include/gui/mainMenuWindow.hpp
     include/gui/booksWindow.hpp
+    include/gui/readingListsWindow.hpp
 )
 
 # UI files
@@ -57,6 +59,7 @@ set(UIS
     gui_designs/RegisterWindow.ui
     gui_designs/MainMenuWindow.ui
     gui_designs/BooksWindow.ui
+    gui_designs/ReadingListsWindow.ui
 )
 
 # Add UI directory to Qt's UIC include path

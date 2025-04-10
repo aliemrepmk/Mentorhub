@@ -46,7 +46,8 @@ void LoginWindow::handleLogin() {
         ui->statusLabel->setText("Login successful. Redirecting...");
 
         // Open main menu
-        auto* menu = new MainMenuWindow();
+        int userId = UserManager::getUserId(email.toStdString());
+        auto* menu = new MainMenuWindow(userId);
         menu->setAttribute(Qt::WA_DeleteOnClose);
         menu->show();
         this->close();

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>ReadingListsWindow</class>
+ <widget class="QWidget" name="ReadingListsWindow">
+  <property name="minimumSize">
+   <size><width>800</width><height>600</height></size>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <!-- Header -->
+   <item>
+    <widget class="QLabel" name="titleLabel">
+     <property name="text"><string>📋 YOUR READING LISTS</string></property>
+     <property name="alignment"><set>Qt::AlignCenter</set></property>
+     <property name="styleSheet">
+      <string notr="true">font-size: 24px; font-weight: bold;</string>
+     </property>
+    </widget>
+   </item>
+   <!-- Table -->
+   <item>
+    <widget class="QTableWidget" name="readingListTable"/>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

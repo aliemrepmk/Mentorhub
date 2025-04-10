@@ -2,7 +2,8 @@
 
 #include <QWidget>
 
-#include "booksWindow.hpp" 
+#include "booksWindow.hpp"
+#include "readingListsWindow.hpp"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainMenuWindow; }
@@ -13,6 +14,7 @@ class MainMenuWindow : public QWidget {
 
 public:
     explicit MainMenuWindow(QWidget *parent = nullptr);
+    explicit MainMenuWindow(int userId, QWidget *parent = nullptr);
     ~MainMenuWindow();
 
 private slots:
@@ -20,4 +22,5 @@ private slots:
 
 private:
     Ui::MainMenuWindow *ui;
+    int m_userId;
 };
