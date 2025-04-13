@@ -67,6 +67,7 @@ void BooksWindow::populateTable(const std::vector<std::tuple<std::string, std::s
     ui->bookTable->clearContents();
     ui->bookTable->setRowCount(static_cast<int>(books.size()));
     ui->bookTable->setColumnCount(4);
+    ui->bookTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
     QStringList headers = { "Book name", "Author", "Release year", "ISBN" };
     ui->bookTable->setHorizontalHeaderLabels(headers);

@@ -18,4 +18,8 @@ private:
     int m_userId;
 
     void loadReadingLists();
+
+private slots:
+    void onAddReadingListClicked();
+    void onReadingListClicked(int row, int column);
 };

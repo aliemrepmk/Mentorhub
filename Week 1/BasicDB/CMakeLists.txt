@@ -23,10 +23,16 @@ include_directories(
     ${LIBPQXX_INCLUDE_DIRS}
     ${LIBSODIUM_INCLUDE_DIRS}
     /opt/homebrew/include
+    /usr/local/include
 )
 
 # Link directories (for pqxx & libsodium)
-link_directories(${LIBPQXX_LIBRARY_DIRS} ${LIBSODIUM_LIBRARY_DIRS})
+link_directories(
+    ${LIBPQXX_LIBRARY_DIRS} 
+    ${LIBSODIUM_LIBRARY_DIRS} 
+    /usr/local/lib 
+    /opt/homebrew/lib
+)
 
 # Source files
 set(SOURCES
@@ -39,6 +45,9 @@ set(SOURCES
     src/gui/mainMenuWindow.cpp
     src/gui/booksWindow.cpp
     src/gui/readingListsWindow.cpp
+    src/gui/readingListDetailsWindow.cpp
+    src/gui/addBookDialog.cpp
+    src/gui/goalsWindow.cpp
 )
 
 # Header files
@@ -51,6 +60,9 @@ set(HEADERS
     include/gui/mainMenuWindow.hpp
     include/gui/booksWindow.hpp
     include/gui/readingListsWindow.hpp
+    include/gui/readingListDetailsWindow.hpp
+    include/gui/addBookDialog.hpp
+    include/gui/goalsWindow.hpp
 )
 
 # UI files
@@ -60,6 +72,8 @@ set(UIS
     gui_designs/MainMenuWindow.ui
     gui_designs/BooksWindow.ui
     gui_designs/ReadingListsWindow.ui
+    gui_designs/ReadingListDetailsWindow.ui
+    gui_designs/GoalsWindow.ui
 )
 
 # Add UI directory to Qt's UIC include path
@@ -77,4 +91,6 @@ target_link_libraries(${PROJECT_NAME}
     Qt6::Widgets
     ${LIBPQXX_LIBRARIES}
     ${LIBSODIUM_LIBRARIES}
+    redis++
+    hiredis
 )
