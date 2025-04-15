@@ -2,32 +2,52 @@
 <ui version="4.0">
  <class>GoalsWindow</class>
  <widget class="QWidget" name="GoalsWindow">
-  <layout class="QVBoxLayout" name="mainLayout">
-   <item>
-    <widget class="QLabel" name="titleLabel">
-     <property name="text">
-      <string>📈 Related Reading Goals</string>
-     </property>
-     <property name="alignment">
-      <set>Qt::AlignCenter</set>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>14</pointsize>
-       <bold>true</bold>
-      </font>
-     </property>
-    </widget>
-   </item>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>📈 Reading Goals</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
    <item>
     <widget class="QTableWidget" name="goalTable"/>
    </item>
    <item>
-    <widget class="QPushButton" name="closeButton">
-     <property name="text">
-      <string>Close</string>
-     </property>
-    </widget>
+    <layout class="QHBoxLayout" name="buttonLayout">
+     <item>
+      <widget class="QPushButton" name="addGoalButton">
+       <property name="text">
+        <string>Add Goal</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="deleteGoalButton">
+       <property name="text">
+        <string>Delete Goal</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="updateGoalButton">
+       <property name="text">
+        <string>Update Goal</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="closeButton">
+       <property name="text">
+        <string>Close</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </item>
   </layout>
  </widget>

@@ -48,6 +48,7 @@ set(SOURCES
     src/gui/readingListDetailsWindow.cpp
     src/gui/addBookDialog.cpp
     src/gui/goalsWindow.cpp
+    src/gui/addGoalDialog.cpp
 )
 
 # Header files
@@ -63,6 +64,7 @@ set(HEADERS
     include/gui/readingListDetailsWindow.hpp
     include/gui/addBookDialog.hpp
     include/gui/goalsWindow.hpp
+    include/gui/addGoalDialog.hpp
 )
 
 # UI files
@@ -74,6 +76,7 @@ set(UIS
     gui_designs/ReadingListsWindow.ui
     gui_designs/ReadingListDetailsWindow.ui
     gui_designs/GoalsWindow.ui
+    gui_designs/AddGoalDialog.ui
 )
 
 # Add UI directory to Qt's UIC include path

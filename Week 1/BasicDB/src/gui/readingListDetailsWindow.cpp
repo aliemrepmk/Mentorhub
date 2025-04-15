@@ -29,7 +29,7 @@ ReadingListDetailsWindow::ReadingListDetailsWindow(int userId, int listId, const
     connect(ui->showGoalsButton, &QPushButton::clicked, this, &ReadingListDetailsWindow::onShowGoalsClicked);
     connect(ui->deleteListButton, &QPushButton::clicked, this, &ReadingListDetailsWindow::onDeleteListClicked);
 
-    loadBooks(); // TODO: implement database loading
+    loadBooks();
 }
 
 ReadingListDetailsWindow::~ReadingListDetailsWindow() {
@@ -117,7 +117,7 @@ void ReadingListDetailsWindow::onRemoveBookClicked() {
 
     auto *item = ui->bookTable->item(row, 0);  // title column
     QString bookTitle = item->text();
-    QString isbn = item->data(Qt::UserRole).toString();  // 👈 Retrieve hidden ISBN
+    QString isbn = item->data(Qt::UserRole).toString();  // Retrieve hidden ISBN
 
     auto confirm = QMessageBox::question(
         this,
@@ -157,7 +157,7 @@ void ReadingListDetailsWindow::onRemoveBookClicked() {
 }
 
 void ReadingListDetailsWindow::onShowGoalsClicked() {
-    auto *goalsWin = new GoalsWindow(m_listId);
+    auto *goalsWin = new GoalsWindow(m_userId, m_listId);
     goalsWin->setAttribute(Qt::WA_DeleteOnClose);
     goalsWin->setWindowFlag(Qt::Window);
     goalsWin->show();
@@ -182,9 +182,9 @@ void ReadingListDetailsWindow::onDeleteListClicked() {
         w.exec_params("DELETE FROM reading_list WHERE id = $1", m_listId);
         w.commit();
 
-        // Optionally: invalidate Redis cache
+        // Invalidate Redis cache
         Redis redis("tcp://127.0.0.1:6379");
-        redis.del("reading_lists:" + std::to_string(m_userId)); // if you have access to m_userId here
+        redis.del("reading_lists:" + std::to_string(m_userId));
 
         // Close this window
         QMessageBox::information(this, "Deleted", "The reading list has been deleted.");

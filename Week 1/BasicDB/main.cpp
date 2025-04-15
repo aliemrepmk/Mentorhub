@@ -38,6 +38,9 @@ int main(int argc, char *argv[]) {
 
     // Load example reading lists
     dbManager.populateReadingLists("/Users/aliemrepamuk/Desktop/BasicDB/json/reading_lists.json");
+    dbManager.createReadingGoal(1, 1, 15);
+    dbManager.createReadingGoal(1, 2, 37);
+    dbManager.createReadingGoal(1, 4, 20);
 
     // === Launch GUI Login Window ===
     LoginWindow loginWindow;

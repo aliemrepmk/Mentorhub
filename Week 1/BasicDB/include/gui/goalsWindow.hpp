@@ -11,14 +11,20 @@ class GoalsWindow : public QWidget {
     Q_OBJECT
 
 public:
-    explicit GoalsWindow(int readingListId, QWidget *parent = nullptr);
+    explicit GoalsWindow(int userId, int readingListId, QWidget *parent = nullptr);
     ~GoalsWindow();
 
-private:
-    Ui::GoalsWindow *ui;
-    int m_readingListId;
+private slots:
+    void onAddGoalClicked();
+    void onDeleteGoalClicked();
+    void onUpdateGoalClicked();
 
+private:
     void loadGoals();
+
+    Ui::GoalsWindow *ui;
+    int m_userId;
+    int m_readingListId;
 };
 
 #endif // GOALSWINDOW_HPP
