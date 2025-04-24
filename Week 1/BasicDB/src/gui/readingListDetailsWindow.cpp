@@ -6,9 +6,7 @@
 #include <QMessageBox>
 
 #include "addBookDialog.hpp"
-#include "database/dbManager.hpp"
-#include <pqxx/pqxx>
-
+#include "database/readingListsManager.hpp"
 #include "goalsWindow.hpp"
 
 #include <sw/redis++/redis++.h>
@@ -38,25 +36,15 @@ ReadingListDetailsWindow::~ReadingListDetailsWindow() {
 
 void ReadingListDetailsWindow::loadBooks() {
     try {
-        auto &conn = DatabaseManager::getInstance().getConnection();
-        pqxx::work w(conn);
-
-        auto result = w.exec_params(
-            "SELECT b.book_name, b.author_name, b.isbn "
-            "FROM reading_list_books rlb "
-            "JOIN books b ON rlb.book_id = b.id "
-            "WHERE rlb.reading_list_id = $1",
-            m_listId
-        );
-
-
-        ui->bookTable->setRowCount(static_cast<int>(result.size()));
+        auto books = ReadingListsManager::getBooksInList(m_listId);
+        
+        ui->bookTable->setRowCount(static_cast<int>(books.size()));
 
         int row = 0;
-        for (const auto &r : result) {
-            QString title = QString::fromStdString(r["book_name"].c_str());
-            QString author = QString::fromStdString(r["author_name"].c_str());
-            QString isbn = QString::fromStdString(r["isbn"].c_str());
+        for (const auto& book : books) {
+            QString title = QString::fromStdString(std::get<0>(book));
+            QString author = QString::fromStdString(std::get<1>(book));
+            QString isbn = QString::fromStdString(std::get<2>(book));
 
             auto *titleItem = new QTableWidgetItem(title);
             titleItem->setData(Qt::UserRole, isbn);  // Store ISBN for later use
@@ -64,7 +52,6 @@ void ReadingListDetailsWindow::loadBooks() {
             ui->bookTable->setItem(row, 1, new QTableWidgetItem(author));
             ++row;
         }
-
     } catch (const std::exception &e) {
         QMessageBox::critical(this, "Error Loading Books", e.what());
     }
@@ -76,32 +63,11 @@ void ReadingListDetailsWindow::onAddBookClicked() {
         QString isbn = dialog.getISBN();
 
         try {
-            auto &conn = DatabaseManager::getInstance().getConnection();
-            pqxx::work w(conn);
-
-            // 1. Find book by ISBN
-            auto result = w.exec_params(
-                "SELECT id FROM books WHERE isbn = $1",
-                isbn.toStdString()
-            );
-
-            if (result.empty()) {
+            if (!ReadingListsManager::addBookToList(m_listId, isbn.toStdString())) {
                 QMessageBox::warning(this, "Not Found", "No book found with that ISBN.");
                 return;
             }
-
-            int bookId = result[0]["id"].as<int>();
-
-            // 2. Insert into reading_list_books
-            w.exec_params(
-                "INSERT INTO reading_list_books (reading_list_id, book_id) VALUES ($1, $2) "
-                "ON CONFLICT DO NOTHING",  // prevent duplicates
-                m_listId, bookId
-            );
-
-            w.commit();
             loadBooks();  // refresh table
-
         } catch (const std::exception &e) {
             QMessageBox::critical(this, "Error", e.what());
         }
@@ -130,27 +96,11 @@ void ReadingListDetailsWindow::onRemoveBookClicked() {
         return;
 
     try {
-        auto &conn = DatabaseManager::getInstance().getConnection();
-        pqxx::work w(conn);
-
-        // Get the book_id from ISBN
-        auto res = w.exec_params("SELECT id FROM books WHERE isbn = $1", isbn.toStdString());
-        if (res.empty()) {
+        if (!ReadingListsManager::removeBookFromList(m_listId, isbn.toStdString())) {
             QMessageBox::warning(this, "Error", "Book not found in database.");
             return;
         }
-
-        int bookId = res[0]["id"].as<int>();
-
-        // Delete from reading_list_books
-        w.exec_params(
-            "DELETE FROM reading_list_books WHERE reading_list_id = $1 AND book_id = $2",
-            m_listId, bookId
-        );
-
-        w.commit();
         loadBooks();  // Refresh the table
-
     } catch (const std::exception &e) {
         QMessageBox::critical(this, "Error Removing Book", e.what());
     }
@@ -175,22 +125,13 @@ void ReadingListDetailsWindow::onDeleteListClicked() {
         return;
 
     try {
-        auto &conn = DatabaseManager::getInstance().getConnection();
-        pqxx::work w(conn);
-
-        // Delete the reading list
-        w.exec_params("DELETE FROM reading_list WHERE id = $1", m_listId);
-        w.commit();
-
-        // Invalidate Redis cache
-        Redis redis("tcp://127.0.0.1:6379");
-        redis.del("reading_lists:" + std::to_string(m_userId));
-
-        // Close this window
-        QMessageBox::information(this, "Deleted", "The reading list has been deleted.");
-        emit readingListDeleted();
-        close();
-
+        if (ReadingListsManager::deleteReadingList(m_listId, m_userId)) {
+            QMessageBox::information(this, "Deleted", "The reading list has been deleted.");
+            emit readingListDeleted();
+            close();
+        } else {
+            QMessageBox::critical(this, "Error Deleting List", "Failed to delete the reading list.");
+        }
     } catch (const std::exception &e) {
         QMessageBox::critical(this, "Error Deleting List", e.what());
     }
