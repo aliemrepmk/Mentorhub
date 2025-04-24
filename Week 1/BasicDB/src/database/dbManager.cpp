@@ -36,7 +36,7 @@ DatabaseManager::DatabaseManager(const std::string& connString) {
 
 DatabaseManager::~DatabaseManager() {
     if(conn && conn->is_open()) {
-        conn->close();
+        conn = nullptr;
     }
 }
 
@@ -46,7 +46,7 @@ pqxx::connection& DatabaseManager::getConnection() {
 
 void DatabaseManager::closeConnection() {
     if(conn && conn->is_open()) {
-        conn->close();
+        conn.reset();
         std::cout << "dbManager: Connection to database is closed\n";
     }
 }

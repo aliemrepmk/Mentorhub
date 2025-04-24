@@ -40,6 +40,7 @@ set(SOURCES
     src/database/dbManager.cpp
     src/database/userManager.cpp
     src/database/bookManager.cpp
+    src/database/readingListsManager.cpp
     src/gui/loginWindow.cpp
     src/gui/registerWindow.cpp
     src/gui/mainMenuWindow.cpp
@@ -56,6 +57,7 @@ set(HEADERS
     include/database/dbManager.hpp
     include/database/userManager.hpp
     include/database/bookManager.hpp
+    include/database/readingListsManager.hpp
     include/gui/loginWindow.hpp
     include/gui/registerWindow.hpp
     include/gui/mainMenuWindow.hpp

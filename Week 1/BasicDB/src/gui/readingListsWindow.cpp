@@ -2,7 +2,7 @@
 #include "ui_ReadingListsWindow.h"
 #include "readingListDetailsWindow.hpp"
 #include "database/dbManager.hpp"
-
+#include <iostream>
 #include <pqxx/pqxx>
 #include <QTableWidgetItem>
 #include <QString>
@@ -45,8 +45,10 @@ void ReadingListsWindow::loadReadingLists() {
         if (cached) {
             // Cache hit
             readingLists = json::parse(*cached);
+            std::cout << "[Cache hit] - Loading reading lists directly from the redis" << std::endl;
         } else {
             // Cache miss: load from PostgreSQL
+            std::cout << "[Cache miss] - Loading reading lists from database to the redis" << std::endl;
             auto& conn = DatabaseManager::getInstance().getConnection();
             pqxx::work w(conn);
 
@@ -71,7 +73,7 @@ void ReadingListsWindow::loadReadingLists() {
             }
 
             // Cache the result in Redis
-            redis.setex(cacheKey, 300, readingLists.dump());
+            redis.setex(cacheKey, 60, readingLists.dump());
         }
 
         // Populate the UI table
