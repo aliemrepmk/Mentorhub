@@ -1,9 +1,8 @@
 #include "goalsWindow.hpp"
 #include "ui_GoalsWindow.h"
-#include "database/dbManager.hpp"
+#include "database/goalsManager.hpp"
 #include "addGoalDialog.hpp"
 
-#include <pqxx/pqxx>
 #include <QTableWidgetItem>
 #include <QMessageBox>
 
@@ -32,98 +31,69 @@ GoalsWindow::~GoalsWindow() {
 }
 
 void GoalsWindow::loadGoals() {
-    try {
-        auto &conn = DatabaseManager::getInstance().getConnection();
-        pqxx::work w(conn);
+    auto goals = GoalsManager::getGoalsForList(m_readingListId);
 
-        auto result = w.exec_params(
-            "SELECT id, start_date, deadline, duration_days FROM reading_goals WHERE reading_list_id = $1",
-            m_readingListId
-        );
+    if (goals.empty()) {
+        QMessageBox::information(this, "No Goals Found", "There are no goals in this reading list.");
+        ui->goalTable->setRowCount(0);
+        return;
+    }
 
-        if (result.empty()) {
-            QMessageBox::information(this, "No Goals Found", "There are no goals in this reading list.");
-            ui->goalTable->setRowCount(0);
-            return;
-        }
+    ui->goalTable->setRowCount(static_cast<int>(goals.size()));
+    int row = 0;
+    for (const auto& g : goals) {
+        QTableWidgetItem *startItem = new QTableWidgetItem(QString::fromStdString(g.startDate));
+        startItem->setData(Qt::UserRole, g.id);
 
-        ui->goalTable->setRowCount(result.size());
-
-        int row = 0;
-        for (const auto &r : result) {
-            QTableWidgetItem *startItem = new QTableWidgetItem(QString::fromStdString(r["start_date"].c_str()));
-            startItem->setData(Qt::UserRole, r["id"].as<int>()); // Store goal ID in hidden data
-
-            ui->goalTable->setItem(row, 0, startItem);
-            ui->goalTable->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(r["deadline"].c_str())));
-            ui->goalTable->setItem(row, 2, new QTableWidgetItem(QString::number(r["duration_days"].as<int>())));
-            ++row;
-        }
-
-    } catch (const std::exception &e) {
-        QMessageBox::critical(this, "Error Loading Goals", e.what());
+        ui->goalTable->setItem(row, 0, startItem);
+        ui->goalTable->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(g.deadline)));
+        ui->goalTable->setItem(row, 2, new QTableWidgetItem(QString::number(g.durationDays)));
+        ++row;
     }
 }
 
 void GoalsWindow::onAddGoalClicked() {
     AddGoalDialog dialog(this);
     if (dialog.exec() == QDialog::Accepted) {
-        try {
-            auto &conn = DatabaseManager::getInstance().getConnection();
-            pqxx::work w(conn);
+        bool success = GoalsManager::addGoal(
+            m_userId,
+            m_readingListId,
+            dialog.getStartDate(),
+            dialog.getDeadline(),
+            dialog.getDuration()
+        );
 
-            w.exec_params(
-                "INSERT INTO reading_goals (user_id, reading_list_id, start_date, deadline, duration_days) "
-                "VALUES ($1, $2, $3, $4, $5)",
-                m_userId,
-                m_readingListId,
-                dialog.getStartDate().toString("yyyy-MM-dd").toStdString(),
-                dialog.getDeadline().toString("yyyy-MM-dd").toStdString(),
-                dialog.getDuration()
-            );
-
-            w.commit();
-            loadGoals(); // Refresh table
-
-        } catch (const std::exception &e) {
-            QMessageBox::critical(this, "Add Goal Error", e.what());
-        }
+        if (success)
+            loadGoals();
+        else
+            QMessageBox::critical(this, "Add Goal Error", "Failed to add goal.");
     }
 }
 
 void GoalsWindow::onDeleteGoalClicked() {
     int currentRow = ui->goalTable->currentRow();
-
     if (currentRow < 0) {
         QMessageBox::warning(this, "No Selection", "Please select a goal to delete.");
         return;
     }
 
-    auto item = ui->goalTable->item(currentRow, 0); // Get item from first column
+    auto item = ui->goalTable->item(currentRow, 0);
     int goalId = item->data(Qt::UserRole).toInt();
 
     auto reply = QMessageBox::question(this, "Confirm Delete", "Are you sure you want to delete this goal?");
     if (reply != QMessageBox::Yes)
         return;
 
-    try {
-        auto &conn = DatabaseManager::getInstance().getConnection();
-        pqxx::work w(conn);
-
-        w.exec_params("DELETE FROM reading_goals WHERE id = $1", goalId);
-        w.commit();
-
+    if (GoalsManager::deleteGoal(goalId)) {
         QMessageBox::information(this, "Deleted", "Goal deleted successfully.");
         loadGoals();
-
-    } catch (const std::exception &e) {
-        QMessageBox::critical(this, "Error Deleting Goal", e.what());
+    } else {
+        QMessageBox::critical(this, "Error Deleting Goal", "Failed to delete goal.");
     }
 }
 
 void GoalsWindow::onUpdateGoalClicked() {
     int currentRow = ui->goalTable->currentRow();
-
     if (currentRow < 0) {
         QMessageBox::warning(this, "No Selection", "Please select a goal to update.");
         return;
@@ -139,24 +109,18 @@ void GoalsWindow::onUpdateGoalClicked() {
     dialog.setInitialValues(currentStart, currentDuration);
 
     if (dialog.exec() == QDialog::Accepted) {
-        try {
-            auto &conn = DatabaseManager::getInstance().getConnection();
-            pqxx::work w(conn);
+        bool success = GoalsManager::updateGoal(
+            goalId,
+            dialog.getStartDate(),
+            dialog.getDeadline(),
+            dialog.getDuration()
+        );
 
-            w.exec_params(
-                "UPDATE reading_goals SET start_date = $1, deadline = $2, duration_days = $3 WHERE id = $4",
-                dialog.getStartDate().toString("yyyy-MM-dd").toStdString(),
-                dialog.getDeadline().toString("yyyy-MM-dd").toStdString(),
-                dialog.getDuration(),
-                goalId
-            );
-
-            w.commit();
+        if (success) {
             loadGoals();
             QMessageBox::information(this, "Updated", "Goal updated successfully.");
-
-        } catch (const std::exception &e) {
-            QMessageBox::critical(this, "Update Error", e.what());
+        } else {
+            QMessageBox::critical(this, "Update Error", "Failed to update goal.");
         }
     }
 }
