@@ -1,2 +1,8 @@
-/Week 1/BasicDB/.env
-/Week 1/BasicDB/build/
+# Ignore macOS system files
+.DS_Store
+
+# Ignore env file in BasicDB
+BasicDB/.env
+
+# Ignore build directory in BasicDB
+BasicDB/build/
