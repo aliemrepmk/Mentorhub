@@ -2,17 +2,11 @@
 .DS_Store
 
 #BasicDB
-# Ignore macOS system files
 BasicDB/.DS_Store
-
-# Ignore env file in BasicDB
 BasicDB/.env
-
-# Ignore build directory in BasicDB
 BasicDB/build/
 
 # BasicCalculator
-# Build directories
 BasicCalculator/build/
 BasicCalculator/CMakeFiles/
 BasicCalculator/CMakeCache.txt
@@ -20,22 +14,24 @@ BasicCalculator/Makefile
 BasicCalculator/*.cmake
 BasicCalculator/*.o
 BasicCalculator/*.out
-
-# Executables
 BasicCalculator/SimpleCalculator
-
-# Qt generated files
 BasicCalculator/*_autogen/
-
-# Docker related
 BasicCalculator/docker-compose.override.yml
-
-# Logs and temp files
 BasicCalculator/*.log
 BasicCalculator/*.tmp
-
-# MacOS specific
 BasicCalculator/.DS_Store
-
-# XQuartz specific
 BasicCalculator/.Xauthority
+
+# PersonalLibrary #
+PersonalLibrary/.DS_Store
+PersonalLibrary/.env
+PersonalLibrary/build/
+PersonalLibrary/CMakeFiles/
+PersonalLibrary/CMakeCache.txt
+PersonalLibrary/Makefile
+PersonalLibrary/*.cmake
+PersonalLibrary/*.o
+PersonalLibrary/*.out
+PersonalLibrary/*_autogen/
+PersonalLibrary/*.log
+PersonalLibrary/*.tmp
